@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajax{% endblock %}
+{% block body %}
+    On veut faire de l'ajax.
+    {{ dump(liste) }}
+
+    <table class="table">
+        {% for joueur in liste %}
+            <tr>
+                <td>
+                    <strong>{{joueur.pseudo}}</strong>
+                </td>
+                <td>
+                    <a href="#" data-action='voir' data-id='{{joueur.id}}'>Voir</a>
+                    -
+                    <a href="#" data-action='editer' data-id='{{joueur.id}}'>Editer</a>
+                    -
+                    <a href="#" data-action='supprimer' data-id='{{joueur.id}}'>Supprimer</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
