@@ -2,8 +2,8 @@
 
 {% block title %}Ajax{% endblock %}
 {% block body %}
-    {{ dump(liste) }}
 
+    <div id="details" class="table"></div>
     <table class="table">
         {% for joueur in liste %}
             <tr>
@@ -13,17 +13,78 @@
                 <td>
                     <a href="#" class='voir' data-id='{{joueur.id}}'>Voir</a>
                     -
-                    <a href="#" class='editer' data-id='{{joueur.id}}'>Editer</a>
+                    <a href="#" class='editer' data-id='{{joueur.id}}' data-toggle="modal" data-target="#exampleModal">Editer</a>
                     -
-                    <a href="#" class='supprimer' data-id='{{joueur.id}}'>Supprimer</a>
+                    <a href="#" class='supprimer' data-id='{{joueur.id}}' data-toggle="modal" data-target="#exampleModal2">Supprimer</a>
                 </td>
             </tr>
         {% endfor %}
+        <tr>
+            <td>
+                <a href="#" data-toggle="modal" data-target="#exampleModal">Nouveau</a>
+            </td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
     </table>
-    <div id="details"></div>
+
+    <!-- Formulaire modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Nouveau joueur</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Pseudo</label>
+                            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Pseudo">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Points</label>
+                            <input type="number" class="form-control" id="exampleInputPassword1" placeholder="... points">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlTextarea1">Commentaires</label>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation suppression modale -->
+    <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Etes vous certain de vouloir supprimer cet enregistrement ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-primary">Supprimer</button>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 {% block javascripts %}
-
 
     <script>
         $("document").ready(function () {
@@ -34,13 +95,11 @@
                 console.log(parametres);
                 $.post("/show", parametres, function (data) {
                     console.log(data);
-                    $("#details").html(data);
+                    let codehtml = "<h1>" + data.pseudo + "</h2><p>Points : " + data.points + "</p><p>" + data.commentaires + "</p>";
+                    $("#details").html(codehtml);
                 }, 'json')
             })
         })
     </script>
-
-
-
 
 {% endblock %}
