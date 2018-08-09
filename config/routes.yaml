@@ -1,3 +1,7 @@
 index:
    path: /
    controller: App\Controller\AjaxController::index
+
+show:
+   path: /show
+   controller: App\Controller\AjaxController::show

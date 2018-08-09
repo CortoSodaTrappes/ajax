@@ -2,7 +2,6 @@
 
 {% block title %}Ajax{% endblock %}
 {% block body %}
-    On veut faire de l'ajax.
     {{ dump(liste) }}
 
     <table class="table">
@@ -12,13 +11,53 @@
                     <strong>{{joueur.pseudo}}</strong>
                 </td>
                 <td>
-                    <a href="#" data-action='voir' data-id='{{joueur.id}}'>Voir</a>
+                    <a href="#" class='voir' data-id='{{joueur.id}}'>Voir</a>
                     -
-                    <a href="#" data-action='editer' data-id='{{joueur.id}}'>Editer</a>
+                    <a href="#" class='editer' data-id='{{joueur.id}}'>Editer</a>
                     -
-                    <a href="#" data-action='supprimer' data-id='{{joueur.id}}'>Supprimer</a>
+                    <a href="#" class='supprimer' data-id='{{joueur.id}}'>Supprimer</a>
                 </td>
             </tr>
         {% endfor %}
     </table>
+    <div id="details"></div>
+{% endblock %}
+{% block javascripts %}
+
+    <script>
+        $("document").ready(function () {
+            $(".voir").click(function () {
+                event.preventDefault();
+                $
+                    .ajax({
+                        method: "POST",
+                        url: "/show",
+                        data: {
+                            id: $(this).data("id")
+                        }
+                    })
+                    .done(function (data) {
+                        console.log(data)
+                    })
+                    .fail(function (jqXHR, textStatus) {
+                        console.log("erreur");
+                    });
+            })
+        })
+    </script>
+
+    {# <script>
+        $("document").ready(function () {
+            $(".voir").click(function () {
+                event.preventDefault();
+                let parametres = "id=" + $(this).data("id");
+                //let parametres = $(this).serialize();
+                console.log(parametres);
+                $.post("/show", parametres, function (data) {
+                    console.log(data);
+                    $("#details").html(data);
+                }, 'json')
+            })
+        })
+    </script> #}
 {% endblock %}

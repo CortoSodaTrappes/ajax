@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use App\Entity\Joueurs;
@@ -10,16 +12,33 @@ class AjaxController extends Controller
 {
     public function index()
     {
-        $id=1;
         $repository = $this->getDoctrine()->getRepository(Joueurs::class);
-
-        // $joueur = $repository->find($id);
-        // $joueur = $repository->findOneBy(['id' => 1]);
         $liste = $repository->findAll();
 
-        $array = array('joueur1'=>"Pedro", 'joueur2' => "Andre") ;
         return $this->render('ajax/index.html.twig', [
              'liste' => $liste 
         ]);
+    }
+
+    public function show(Request $request){
+        // var_dump($request);
+
+        try{
+            $joueur = $this->getDoctrine()
+                    ->getRepository(Joueurs::class)
+                    ->$repository->find($request['id']);
+        }catch(\Doctrine\ORM\ServerException $e){
+            return new Response(json_encode($e), 200, array("Content-Type"=> "application/json"));
+        }
+
+
+        if($joueur){
+
+        }
+
+
+
+        //return $this->render('ajax/index.html.twig', ['liste' => $joueur->getPseudo()]);
+        return new Response(json_encode($joueur), 200, array("Content-Type"=> "application/json"));
     }
 }
