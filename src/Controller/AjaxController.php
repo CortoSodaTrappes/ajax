@@ -20,13 +20,15 @@ class AjaxController extends Controller
         ]);
     }
 
+    
+
     public function show(Request $request){
         // var_dump($request);
 
         try{
             $joueur = $this->getDoctrine()
-                    ->getRepository(Joueurs::class)
-                    ->$repository->find($request['id']);
+                    ->getRepository(Joueurs::class);
+            $joueurs = $joueur->find($request->get("id"));
         }catch(\Doctrine\ORM\ServerException $e){
             return new Response(json_encode($e), 200, array("Content-Type"=> "application/json"));
         }
@@ -39,6 +41,6 @@ class AjaxController extends Controller
 
 
         //return $this->render('ajax/index.html.twig', ['liste' => $joueur->getPseudo()]);
-        return new Response(json_encode($joueur), 200, array("Content-Type"=> "application/json"));
+        return new Response(json_encode($joueurs->getIdentiter()), 200, array("Content-Type"=> "application/json"));
     }
 }

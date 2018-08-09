@@ -24,29 +24,8 @@
 {% endblock %}
 {% block javascripts %}
 
-    <script>
-        $("document").ready(function () {
-            $(".voir").click(function () {
-                event.preventDefault();
-                $
-                    .ajax({
-                        method: "POST",
-                        url: "/show",
-                        data: {
-                            id: $(this).data("id")
-                        }
-                    })
-                    .done(function (data) {
-                        console.log(data)
-                    })
-                    .fail(function (jqXHR, textStatus) {
-                        console.log("erreur");
-                    });
-            })
-        })
-    </script>
 
-    {# <script>
+    <script>
         $("document").ready(function () {
             $(".voir").click(function () {
                 event.preventDefault();
@@ -59,5 +38,9 @@
                 }, 'json')
             })
         })
-    </script> #}
+    </script>
+
+
+
+
 {% endblock %}

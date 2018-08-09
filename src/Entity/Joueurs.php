@@ -88,4 +88,14 @@ class Joueurs
 
         return $this;
     }
+
+    public function getIdentiter(): Array
+    {
+        return array(
+            "id" => $this->getId(),
+            "pseudo" => $this->getPseudo(),
+            "points" => $this->getPoints(),
+            "commentaires" => $this->getCommentaires(),
+        );
+    }
 }
